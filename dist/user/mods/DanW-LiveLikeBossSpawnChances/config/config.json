@@ -1,0 +1,44 @@
+{
+	"enabled": true,
+	"debug": {
+		"verbose_logging": false,
+		"defaultPlayerLevel": 70,
+		"defaultPlayerHours": 2000
+	},
+	"adjustment_factors": {
+		"playerLevel": true,
+		"playerHours": true
+	},
+	"adjustments_disabled_after_player_level": 40,
+	"thresholds": {
+		"adjustmentRange" : {
+			"min": 0.2,
+			"max": 1
+		},
+		"playerLevel" : {
+			"min": 10,
+			"max": 30
+		},
+		"playerHours" : {
+			"min": 15,
+			"max": 60
+		}
+	},
+	"ignored_bosses": {
+		"Customs": ["gifter"],
+		"Factory": ["gifter"],
+		"Interchange": ["gifter"],
+		"Laboratory": ["pmcBot"],
+		"Lighthouse": ["gifter", "exUsec", "bossZryachiy"],
+		"ReserveBase": ["gifter"],
+		"Sandbox": ["gifter"],
+		"Shoreline": ["gifter"],
+		"Streets of Tarkov": ["gifter"],
+		"Woods": ["gifter"]
+	},
+	"blocked_bosses": ["arenaFighterEvent", "crazyAssaultEvent", "peacemaker"],
+	"chance_progression_rate": [
+		[0, 0],
+		[1, 1]
+	]
+}
