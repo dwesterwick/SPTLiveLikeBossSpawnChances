@@ -24,7 +24,7 @@ export interface IMinMax
     max: number
 }
 
-class DansDevTools implements IPreSptLoadMod, IPostSptLoadMod, IPostDBLoadMod
+class LiveLikeBossSpawnChances implements IPreSptLoadMod, IPostSptLoadMod, IPostDBLoadMod
 {
     private commonUtils: CommonUtils
 
@@ -80,7 +80,7 @@ class DansDevTools implements IPreSptLoadMod, IPostSptLoadMod, IPostDBLoadMod
         }
 
         // For testing only
-        this.adjustAllBossSpawnChances("dummySessionId");
+        //this.adjustAllBossSpawnChances("dummySessionId");
     }
 
     private adjustAllBossSpawnChances(sessionId: string): void
@@ -138,7 +138,7 @@ class DansDevTools implements IPreSptLoadMod, IPostSptLoadMod, IPostDBLoadMod
             return defaultPlayerLevel;
         }
 
-        return profile.Info.Level;
+        return profile.Info?.Level ?? 0;
     }
 
     private getPlayerHours(sessionId: string): number
@@ -153,8 +153,8 @@ class DansDevTools implements IPreSptLoadMod, IPostSptLoadMod, IPostDBLoadMod
         }
 
         const scavProfile = this.profileHelper.getScavProfile(sessionId);
-        const pmcSecondsInRaid = pmcProfile.Stats.Eft?.TotalInGameTime ?? 0;
-        const scavSecondsInRaid = scavProfile.Stats.Eft?.TotalInGameTime ?? 0;
+        const pmcSecondsInRaid = pmcProfile.Stats?.Eft?.TotalInGameTime ?? 0;
+        const scavSecondsInRaid = scavProfile?.Stats?.Eft?.TotalInGameTime ?? 0;
 
         return CommonUtils.round((pmcSecondsInRaid + scavSecondsInRaid) / 3600.0, 2);
     }
@@ -203,4 +203,4 @@ class DansDevTools implements IPreSptLoadMod, IPostSptLoadMod, IPostDBLoadMod
     }
 }
 
-module.exports = { mod: new DansDevTools() }
+module.exports = { mod: new LiveLikeBossSpawnChances() }
