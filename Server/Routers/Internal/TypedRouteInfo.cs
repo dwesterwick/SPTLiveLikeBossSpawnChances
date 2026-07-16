@@ -1,10 +1,10 @@
-﻿using DansDevTools.Helpers;
+﻿using LiveLikeBossSpawnChances.Helpers;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common;
 using SPTarkov.Server.Core.Models.Utils;
 
-namespace DansDevTools.Routers.Internal
+namespace LiveLikeBossSpawnChances.Routers.Internal
 {
     internal class TypedRouteInfo<T> : IRouteInfo where T: class, IRequestData
     {

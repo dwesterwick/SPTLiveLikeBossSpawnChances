@@ -5,7 +5,7 @@ using SPTarkov.Server.Core.Models.Spt.Mod;
 using SPTarkov.Server.Core.Utils;
 using SPTarkov.Server.Core.Utils.Logger.Handlers;
 
-namespace DansDevTools.Server.Internal;
+namespace LiveLikeBossSpawnChances.Server.Internal;
 
 // Copied from https://github.com/sp-tarkov/server-csharp/blob/main/Testing/UnitTests/DI.cs
 

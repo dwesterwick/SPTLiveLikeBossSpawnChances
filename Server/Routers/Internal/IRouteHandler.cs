@@ -1,4 +1,4 @@
-﻿namespace DansDevTools.Routers.Internal
+﻿namespace LiveLikeBossSpawnChances.Routers.Internal
 {
     public interface IRouteHandler
     {

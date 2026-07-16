@@ -2,66 +2,43 @@
 using SPTarkov.Server.Core.Helpers;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common;
-using SPTarkov.Server.Core.Models.Enums;
-using SPTarkov.Server.Core.Services;
-using SPTarkov.Server.Core.Utils;
 
-namespace DansDevTools.Utils
+namespace LiveLikeBossSpawnChances.Utils
 {
     [Injectable(InjectionType.Singleton)]
     public class ProfileUtil
     {
-        private DatabaseService _databaseService;
         private ProfileHelper _profileHelper;
-        private TimeUtil _timeUtil;
-        private FenceService _fenceService;
 
-        public ProfileUtil(DatabaseService databaseService, ProfileHelper profileHelper, TimeUtil timeUtil, FenceService fenceService)
+        public ProfileUtil(ProfileHelper profileHelper)
         {
-            _databaseService = databaseService;
             _profileHelper = profileHelper;
-            _timeUtil = timeUtil;
-            _fenceService = fenceService;
         }
 
         public PmcData? GetPmcProfile(MongoId sessionId) => _profileHelper.GetPmcProfile(sessionId);
         public PmcData? GetScavProfile(MongoId sessionId) => _profileHelper.GetScavProfile(sessionId);
 
-        public int GetBaseScavCooldownTime() => _databaseService.GetGlobals().Configuration.SavagePlayCooldown;
-        public double GetMaxScavCooldownTime(PmcData pmcData) => GetBaseScavCooldownTime() * GetTotalScavCooldownTimeModifier(pmcData);
-
-        public double GetTotalScavCooldownTimeModifier(PmcData pmcData)
+        public int? GetPmcLevel(MongoId sessionId)
         {
-            if (pmcData?.Bonuses == null)
-            {
-                throw new InvalidOperationException("Cannot retrieve PMC bonus information");
-            }
-
-            double pmcBonusModifierTotal = pmcData.Bonuses
-                .Where(x => x.Type == BonusType.ScavCooldownTimer)
-                .Where(x => x.Value != null)
-                .Sum(bonus => bonus.Value!.Value / 100);
-
-            FenceLevel? fenceInfo = _fenceService.GetFenceInfo(pmcData);
-            if (fenceInfo == null)
-            {
-                throw new InvalidOperationException("Cannot retrieve Fence information for PMC profile");
-            }
-
-            return (1 + pmcBonusModifierTotal) * fenceInfo.SavageCooldownModifier;
+            PmcData? pmcData = GetPmcProfile(sessionId);
+            return pmcData?.Info?.Level;
         }
 
-        public double? GetScavCooldownTimeRemaining(PmcData scavData)
+        public double? GetPlayerHours(MongoId sessionId)
         {
-            if (scavData?.Info?.SavageLockTime == null)
+            PmcData? pmcData = GetPmcProfile(sessionId);
+            if (pmcData == null)
             {
-                throw new InvalidOperationException("SavageLockTime is null");
+                return null;
             }
 
-            long now = _timeUtil.GetTimeStamp();
-            double timeUtilScavIsAvailable = Math.Max(0, (double)(scavData!.Info!.SavageLockTime! - now));
+            PmcData? scavData = GetScavProfile(sessionId);
 
-            return timeUtilScavIsAvailable;
+            long pmcSecondsInRaid = pmcData?.Stats?.Eft?.TotalInGameTime ?? 0;
+            long scavSecondsInRaid = scavData?.Stats?.Eft?.TotalInGameTime ?? 0;
+            double totalHoursInRaid = (pmcSecondsInRaid + scavSecondsInRaid) / 3600.0;
+
+            return Math.Round(totalHoursInRaid, 2);
         }
     }
 }

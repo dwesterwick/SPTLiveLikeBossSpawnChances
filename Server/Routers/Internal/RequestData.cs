@@ -1,7 +1,7 @@
 ﻿using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Utils;
 
-namespace DansDevTools.Routers.Internal
+namespace LiveLikeBossSpawnChances.Routers.Internal
 {
     public struct RequestData
     {

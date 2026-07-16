@@ -1,4 +1,4 @@
-﻿namespace DansDevTools.Utils.ModIntegrityTests.Internal
+﻿namespace LiveLikeBossSpawnChances.Utils.ModIntegrityTests.Internal
 {
     public interface IModIntegrityTest
     {

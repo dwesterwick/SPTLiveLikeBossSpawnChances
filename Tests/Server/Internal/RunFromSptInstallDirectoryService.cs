@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DansDevTools.Server.Internal
+namespace LiveLikeBossSpawnChances.Server.Internal
 {
     internal static class RunFromSptInstallDirectoryService
     {

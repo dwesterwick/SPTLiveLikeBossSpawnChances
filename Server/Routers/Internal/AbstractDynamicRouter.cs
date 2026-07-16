@@ -1,8 +1,8 @@
-﻿using DansDevTools.Utils;
+﻿using LiveLikeBossSpawnChances.Utils;
 using SPTarkov.Server.Core.Models.Eft.Common;
 using SPTarkov.Server.Core.Utils;
 
-namespace DansDevTools.Routers.Internal
+namespace LiveLikeBossSpawnChances.Routers.Internal
 {
     internal abstract class AbstractDynamicRouter : AbstractTypedDynamicRouter<EmptyRequestData>
     {

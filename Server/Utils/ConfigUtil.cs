@@ -1,10 +1,10 @@
-﻿using DansDevTools.Configuration;
-using DansDevTools.Helpers;
+﻿using LiveLikeBossSpawnChances.Configuration;
+using LiveLikeBossSpawnChances.Helpers;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Helpers;
 using System.Reflection;
 
-namespace DansDevTools.Utils
+namespace LiveLikeBossSpawnChances.Utils
 {
     [Injectable(InjectionType.Singleton)]
     public class ConfigUtil

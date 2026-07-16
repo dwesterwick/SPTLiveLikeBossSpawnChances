@@ -1,7 +1,7 @@
 ﻿using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.DI;
 
-namespace DansDevTools;
+namespace LiveLikeBossSpawnChances;
 
 [Injectable(TypePriority = OnLoadOrder.PreSptModLoader + LiveLikeBossSpawnChances_Server.LOAD_ORDER_OFFSET)]
 public class LiveLikeBossSpawnChances_Server : IOnLoad

@@ -1,4 +1,4 @@
-﻿namespace DansDevTools.Utils.Internal
+﻿namespace LiveLikeBossSpawnChances.Utils.Internal
 {
     public class ObjectCache<T>
     {

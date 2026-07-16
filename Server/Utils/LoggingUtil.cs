@@ -1,13 +1,19 @@
-﻿using SPTarkov.DI.Annotations;
+﻿using LiveLikeBossSpawnChances.Helpers;
+using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Models.Utils;
 
-namespace DansDevTools.Utils
+namespace LiveLikeBossSpawnChances.Utils
 {
     [Injectable(InjectionType.Singleton)]
-    public class LoggingUtil(ISptLogger<LiveLikeBossSpawnChances_Server> logger)
+    public class LoggingUtil(ISptLogger<LiveLikeBossSpawnChances_Server> logger, ConfigUtil _configUtil)
     {
         public void Debug(string message)
         {
+            if (!_configUtil.CurrentConfig.IsVerboseLoggingEnabled())
+            {
+                return;
+            }
+
             logger.Debug(GetLogPrefix() + message);
         }
 

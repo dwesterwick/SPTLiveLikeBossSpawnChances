@@ -1,4 +1,4 @@
-﻿namespace DansDevTools.Common;
+﻿namespace LiveLikeBossSpawnChances.Common;
 
 internal class FileLocationTests
 {

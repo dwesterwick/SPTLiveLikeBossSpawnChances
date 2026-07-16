@@ -1,6 +1,4 @@
-﻿using SPTarkov.Server.Core.Models.Spt.Config;
-
-namespace DansDevTools.Helpers
+﻿namespace LiveLikeBossSpawnChances.Helpers
 {
     public static class CloningHelpers
     {
@@ -11,19 +9,6 @@ namespace DansDevTools.Helpers
             {
                 clone.Add(kvp.Key, kvp.Value);
             }
-            return clone;
-        }
-
-        public static ScavRaidTimeLocationSettings Clone(this ScavRaidTimeLocationSettings original)
-        {
-            ScavRaidTimeLocationSettings clone = new ScavRaidTimeLocationSettings();
-            clone.ReducedChancePercent = original.ReducedChancePercent;
-            clone.AdjustWaves = original.AdjustWaves;
-            clone.MinDynamicLootPercent = original.MinDynamicLootPercent;
-            clone.MinStaticLootPercent = original.MinStaticLootPercent;
-            clone.ReduceLootByPercent = original.ReduceLootByPercent;
-            clone.ReductionPercentWeights = original.ReductionPercentWeights.Clone();
-
             return clone;
         }
     }

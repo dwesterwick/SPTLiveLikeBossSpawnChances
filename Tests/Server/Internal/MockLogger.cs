@@ -4,7 +4,7 @@ using SPTarkov.Server.Core.Models.Spt.Logging;
 using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Utils.Logger;
 
-namespace DansDevTools.Server.Internal;
+namespace LiveLikeBossSpawnChances.Server.Internal;
 
 // Copied from https://github.com/sp-tarkov/server-csharp/blob/main/Testing/UnitTests/Mock/MockLogger.cs
 

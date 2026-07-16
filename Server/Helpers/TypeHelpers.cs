@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace DansDevTools.Helpers
+namespace LiveLikeBossSpawnChances.Helpers
 {
     public static class TypeHelpers
     {

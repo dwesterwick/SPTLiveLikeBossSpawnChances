@@ -1,6 +1,6 @@
 ﻿using SPTarkov.Server.Core.Utils;
 
-namespace DansDevTools.Helpers
+namespace LiveLikeBossSpawnChances.Helpers
 {
     public static class RouterHelpers
     {

@@ -1,6 +1,6 @@
 ﻿using SPTarkov.Server.Core.Models.Eft.Common;
 
-namespace DansDevTools.Routers.Internal
+namespace LiveLikeBossSpawnChances.Routers.Internal
 {
     internal class RouteInfo : TypedRouteInfo<EmptyRequestData>
     {

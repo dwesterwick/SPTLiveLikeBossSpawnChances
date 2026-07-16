@@ -1,7 +1,7 @@
 ﻿using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Utils;
 
-namespace DansDevTools.Routers.Internal
+namespace LiveLikeBossSpawnChances.Routers.Internal
 {
     internal static class RouteManager
     {

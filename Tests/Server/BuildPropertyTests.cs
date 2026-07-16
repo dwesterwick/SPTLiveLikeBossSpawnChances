@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace DansDevTools.Server;
+namespace LiveLikeBossSpawnChances.Server;
 
 public class BuildPropertyTests
 {

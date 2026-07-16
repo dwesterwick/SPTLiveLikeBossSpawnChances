@@ -1,6 +1,6 @@
 ﻿using SPTarkov.Server.Core.Models.Spt.Mod;
 
-namespace DansDevTools
+namespace LiveLikeBossSpawnChances
 {
     public record ModMetadata : AbstractModMetadata
     {

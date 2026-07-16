@@ -1,8 +1,8 @@
-﻿using DansDevTools.Helpers;
-using DansDevTools.Utils.ModIntegrityTests.Internal;
+﻿using LiveLikeBossSpawnChances.Helpers;
+using LiveLikeBossSpawnChances.Utils.ModIntegrityTests.Internal;
 using SPTarkov.DI.Annotations;
 
-namespace DansDevTools.Utils
+namespace LiveLikeBossSpawnChances.Utils
 {
     [Injectable(InjectionType.Singleton)]
     public class ModIntegrityTestingUtil

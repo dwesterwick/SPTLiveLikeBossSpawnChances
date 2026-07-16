@@ -1,10 +1,10 @@
-﻿using DansDevTools.Helpers;
-using DansDevTools.Utils;
+﻿using LiveLikeBossSpawnChances.Helpers;
+using LiveLikeBossSpawnChances.Utils;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Utils;
 using SPTarkov.Server.Core.Utils;
 
-namespace DansDevTools.Routers.Internal;
+namespace LiveLikeBossSpawnChances.Routers.Internal;
 
 internal abstract class AbstractTypedDynamicRouter<T> : DynamicRouter, IRouteHandler where T : class, IRequestData
 {

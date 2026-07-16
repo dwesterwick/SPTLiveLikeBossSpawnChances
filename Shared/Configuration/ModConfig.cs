@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace DansDevTools.Configuration
+namespace LiveLikeBossSpawnChances.Configuration
 {
     [DataContract]
     public class ModConfig
@@ -9,31 +9,25 @@ namespace DansDevTools.Configuration
         public bool Enabled { get; set; } = false;
 
         [DataMember(Name = "debug", IsRequired = true)]
-        public bool Debug { get; set; } = false;
+        public DebugConfig Debug { get; set; } = new DebugConfig();
 
-        [DataMember(Name = "scav_cooldown_time", IsRequired = true)]
-        public int ScavCooldownTime { get; set; } = 1500;
+        [DataMember(Name = "adjustment_factors", IsRequired = true)]
+        public AdjustmentFactorsConfig AdjustmentFactors { get; set; } = new AdjustmentFactorsConfig();
 
-        [DataMember(Name = "free_labs_access", IsRequired = true)]
-        public bool FreeLabsAccess { get; set; } = false;
+        [DataMember(Name = "adjustments_disabled_after_player_level", IsRequired = true)]
+        public int AdjustmentsDisabledAfterPlayerLevel { get; set; } = 40;
 
-        [DataMember(Name = "free_labyrinth_access", IsRequired = true)]
-        public bool FreeLabyrinthAccess { get; set; } = false;
+        [DataMember(Name = "thresholds", IsRequired = true)]
+        public ThresholdsConfig Thresholds { get; set; } = new ThresholdsConfig();
 
-        [DataMember(Name = "min_level_for_flea", IsRequired = true)]
-        public int MinLevelForFlea { get; set; } = 15;
+        [DataMember(Name = "ignored_bosses", IsRequired = true)]
+        public Dictionary<string, string[]> IgnoredBosses { get; set; } = new Dictionary<string, string[]>();
 
-        [DataMember(Name = "full_length_scav_raids", IsRequired = true)]
-        public bool FullLengthScavRaids { get; set; } = false;
+        [DataMember(Name = "blocked_bosses", IsRequired = true)]
+        public string[] BlockedBosses { get; set; } = [];
 
-        [DataMember(Name = "always_have_airdrops", IsRequired = true)]
-        public bool AlwaysHaveAirdrops { get; set; } = false;
-
-        [DataMember(Name = "bosses_always_spawn", IsRequired = true)]
-        public bool BossesAlwaysSpawn { get; set; } = false;
-
-        [DataMember(Name = "season_always_summer", IsRequired = true)]
-        public bool SeasonAlwaysSummer { get; set; } = false;
+        [DataMember(Name = "chance_progression_rate", IsRequired = true)]
+        public double[][] ChanceProgressionRate { get; set; } = Array.Empty<double[]>();
 
         public ModConfig()
         {

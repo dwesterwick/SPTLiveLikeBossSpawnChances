@@ -1,8 +1,8 @@
-﻿using DansDevTools.Helpers;
-using DansDevTools.Utils;
+﻿using LiveLikeBossSpawnChances.Helpers;
+using LiveLikeBossSpawnChances.Utils;
 using SPTarkov.Server.Core.DI;
 
-namespace DansDevTools.Services.Internal;
+namespace LiveLikeBossSpawnChances.Services.Internal;
 
 public abstract class AbstractService : IOnLoad
 {
