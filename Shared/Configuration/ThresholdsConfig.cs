@@ -9,7 +9,7 @@ namespace LiveLikeBossSpawnChances.Configuration
     [DataContract]
     public class ThresholdsConfig
     {
-        [DataMember(Name = "adjustmentRange", IsRequired = true)]
+        [DataMember(Name = "adjustment_range", IsRequired = true)]
         public MinMaxConfig AdjustmentRange { get; set; } = new MinMaxConfig(0.2, 1);
 
         [DataMember(Name = "player_level", IsRequired = true)]
