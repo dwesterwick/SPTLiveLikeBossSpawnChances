@@ -23,7 +23,7 @@ namespace LiveLikeBossSpawnChances.Services
                 return;
             }
 
-            Logger.Warning("DEBUG: ADjusting boss spawn chances using default player values...");
+            Logger.Warning("DEBUG: Adjusting boss spawn chances using default player values...");
             _adjustSpawnChancesUtil.AdjustAllBossSpawnChancesUsingDefaultPlayerValues();
         }
     }

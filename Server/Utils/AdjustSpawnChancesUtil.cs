@@ -30,6 +30,12 @@ namespace LiveLikeBossSpawnChances.Utils
 
         public void AdjustAllBossSpawnChances(MongoId? sessionId)
         {
+            double adjustmentMultiplier = GetAdjustmentMultiplierForProfile(sessionId);
+            AdjustAllBossSpawnChances(adjustmentMultiplier);
+        }
+
+        public double GetAdjustmentMultiplierForProfile(MongoId? sessionId)
+        {
             int pmcLevel = GetPmcLevel(sessionId);
             double playerHours = GetPlayerHours(sessionId);
 
@@ -38,7 +44,7 @@ namespace LiveLikeBossSpawnChances.Utils
             MinMaxConfig adjustmentRange = _config.CurrentConfig.Thresholds.AdjustmentRange;
             double adjustmentMultiplier = adjustmentRange.Min + (adjustmentRange.Max - adjustmentRange.Min) * minProgressionFactor;
 
-            AdjustAllBossSpawnChances(adjustmentMultiplier);
+            return adjustmentMultiplier;
         }
 
         public void AdjustAllBossSpawnChances(double adjustmentMultiplier)
@@ -84,7 +90,7 @@ namespace LiveLikeBossSpawnChances.Utils
                 }
                 else
                 {
-                    bossLocationSpawn.BossChance = Math.Max(0, Math.Min(100, Math.Round(originalChance * adjustmentMultiplier)));
+                    bossLocationSpawn.BossChance = Math.Clamp(Math.Round(originalChance * adjustmentMultiplier), 0, 100);
                 }
 
                 if (originalChance != bossLocationSpawn.BossChance)
