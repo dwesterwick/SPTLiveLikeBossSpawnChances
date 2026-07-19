@@ -14,8 +14,6 @@ namespace LiveLikeBossSpawnChances.Server
 {
     public class SpawnAdjustmentsTests
     {
-        private const double MAX_REVERSIBLE_ERROR = 0.1;
-
         private ISptLogger<LiveLikeBossSpawnChances_Server> _logger;
         private LoggingUtil _loggingUtil;
         private MockConfigUtil _configUtil;
