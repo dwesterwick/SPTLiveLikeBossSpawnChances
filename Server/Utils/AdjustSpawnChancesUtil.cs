@@ -9,7 +9,7 @@ using System.Numerics;
 namespace LiveLikeBossSpawnChances.Utils
 {
     [Injectable(InjectionType.Singleton)]
-    internal class AdjustSpawnChancesUtil
+    public class AdjustSpawnChancesUtil
     {
         private double _lastAdjustmentMultiplierApplied = 1;
 
@@ -38,6 +38,11 @@ namespace LiveLikeBossSpawnChances.Utils
             MinMaxConfig adjustmentRange = _config.CurrentConfig.Thresholds.AdjustmentRange;
             double adjustmentMultiplier = adjustmentRange.Min + (adjustmentRange.Max - adjustmentRange.Min) * minProgressionFactor;
 
+            AdjustAllBossSpawnChances(adjustmentMultiplier);
+        }
+
+        public void AdjustAllBossSpawnChances(double adjustmentMultiplier)
+        {
             double correctedAdjustmentMultiplier = adjustmentMultiplier / _lastAdjustmentMultiplierApplied;
             if (correctedAdjustmentMultiplier == 1)
             {
@@ -84,7 +89,7 @@ namespace LiveLikeBossSpawnChances.Utils
 
                 if (originalChance != bossLocationSpawn.BossChance)
                 {
-                    _logger.Info($"Changed spawn chance of {bossLocationSpawn.BossName} on {location.Base.Name} from {originalChance}% to {bossLocationSpawn.BossChance}%");
+                    _logger.Debug($"Changed spawn chance of {bossLocationSpawn.BossName} on {location.Base.Name} from {originalChance}% to {bossLocationSpawn.BossChance}%");
                 }
             }
         }
@@ -134,14 +139,14 @@ namespace LiveLikeBossSpawnChances.Utils
             int maxLevelForAdjustments = _config.CurrentConfig.AdjustmentsDisabledAfterPlayerLevel;
             if (pmcLevel > maxLevelForAdjustments)
             {
-                _logger.Info($"Player level is {pmcLevel}, and no adjustments will be made after level {maxLevelForAdjustments}");
+                _logger.Debug($"Player level is {pmcLevel}, and no adjustments will be made after level {maxLevelForAdjustments}");
                 return minProgressionFactor;
             }
 
             if (_config.CurrentConfig.AdjustmentFactors.PlayerLevel)
             {
                 double pmcLevelProgressionFactor = GetProgressionFactor(_config.CurrentConfig.Thresholds.PlayerLevel, pmcLevel);
-                _logger.Info($"Calculated progression factor of {Math.Round(pmcLevelProgressionFactor, 2)} for player level {pmcLevel}");
+                _logger.Debug($"Calculated progression factor of {Math.Round(pmcLevelProgressionFactor, 2)} for player level {pmcLevel}");
 
                 minProgressionFactor = Math.Min(minProgressionFactor, pmcLevelProgressionFactor);
             }
@@ -149,7 +154,7 @@ namespace LiveLikeBossSpawnChances.Utils
             if (_config.CurrentConfig.AdjustmentFactors.PlayerHours)
             {
                 double playerHoursProgressionFactor = GetProgressionFactor(_config.CurrentConfig.Thresholds.PlayerHours, playerHours);
-                _logger.Info($"Calculated progression factor of {Math.Round(playerHoursProgressionFactor, 2)} for player hours {playerHours}");
+                _logger.Debug($"Calculated progression factor of {Math.Round(playerHoursProgressionFactor, 2)} for player hours {playerHours}");
 
                 minProgressionFactor = Math.Min(minProgressionFactor, playerHoursProgressionFactor);
             }

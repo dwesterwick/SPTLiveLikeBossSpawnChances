@@ -15,7 +15,7 @@ namespace LiveLikeBossSpawnChances.Configuration
         public int DefaultPlayerLevel { get; set; } = 70;
 
         [DataMember(Name = "default_player_hours", IsRequired = true)]
-        public int DefaultPlayerHours { get; set; } = 2000;
+        public double DefaultPlayerHours { get; set; } = 2000;
 
         public DebugConfig()
         {
