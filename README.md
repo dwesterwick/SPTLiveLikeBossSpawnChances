@@ -15,7 +15,8 @@ This mod is highly configurable in _config.json_ and allows the following to be 
 * `thresholds.player_level` and `thresholds.player_hours`: The range of player levels and in-raid hours between which boss spawn rates will be scaled. If either value is below its corresponding minimum threshold, boss spawn rates will be scaled by the minimum value in `thresholds.adjustment_range`. After both values are above their corresponding maximum thresholds, boss spawn rates will be scaled by the maximum value in `thresholds.adjustment_range`. Otherwise, scaling will be determined by whichever value (player level or in-raid hours) has the least amount of "progression" defined by these ranges. 
 * `ignored_bosses`: the bosses on each map that will not have their spawn rates adjusted by this mod. By default, this includes Rogues and Zryachiy on Lighthouse, Raiders on Labs, and Santa on all maps.
 * `blocked_bosses`: the bosses that will be blocked from spawning on all maps. By default, this includes Bloodhounds and "crazy" Scavs.
-* `chance_progression_rate`: the scaling curve that will be applied when either player level or in-raid hours are between their corresponding ranges defined in `thresholds`. By default, scaling is linear.
+* `disable_weekly_boss_rotation`: disables a random boss being forced to have a 100% spawn chance each week (implemented by SPT)
+* * `chance_progression_rate`: the scaling curve that will be applied when either player level or in-raid hours are between their corresponding ranges defined in `thresholds`. By default, scaling is linear.
 
 **Known Issues:**
 * Due to rounding error, spawn rates might not exactly match vanilla SPT values after switching from a new profile to a Dev (or other late-wipe) profile. However, they should be close enough that you won't notice a difference.

@@ -26,6 +26,9 @@ namespace LiveLikeBossSpawnChances.Configuration
         [DataMember(Name = "blocked_bosses", IsRequired = true)]
         public string[] BlockedBosses { get; set; } = [];
 
+        [DataMember(Name = "disable_weekly_boss_rotation", IsRequired = true)]
+        public bool DisableWeeklyBossRotation { get; set; } = true;
+
         [DataMember(Name = "chance_progression_rate", IsRequired = true)]
         public double[][] ChanceProgressionRate { get; set; } = Array.Empty<double[]>();
 

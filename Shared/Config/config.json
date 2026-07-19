@@ -38,6 +38,7 @@
 		"Woods": [ "gifter", "shooterBTR" ]
 	},
 	"blocked_bosses": [ "arenaFighterEvent", "crazyAssaultEvent", "peacemaker", "skier" ],
+	"disable_weekly_boss_rotation": true,
 	"chance_progression_rate": [
 		[0, 0],
 		[1, 1]
