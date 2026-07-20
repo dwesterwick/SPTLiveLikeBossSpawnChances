@@ -11,7 +11,7 @@
 	},
 	"adjustments_disabled_after_player_level": 40,
 	"thresholds": {
-		"adjustmentRange" : {
+		"adjustment_range" : {
 			"min": 0.2,
 			"max": 1
 		},
