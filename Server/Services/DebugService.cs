@@ -6,7 +6,7 @@ using SPTarkov.Server.Core.DI;
 
 namespace LiveLikeBossSpawnChances.Services
 {
-    [Injectable(TypePriority = OnLoadOrder.PostSptModLoader + LiveLikeBossSpawnChances_Server.LOAD_ORDER_OFFSET)]
+    [Injectable(TypePriority = OnLoadOrder.Preload + LiveLikeBossSpawnChances_Server.LOAD_ORDER_OFFSET)]
     internal class DebugService : AbstractService
     {
         private AdjustSpawnChancesUtil _adjustSpawnChancesUtil;

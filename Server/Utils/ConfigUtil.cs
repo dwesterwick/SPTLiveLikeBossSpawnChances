@@ -1,7 +1,7 @@
 ﻿using LiveLikeBossSpawnChances.Configuration;
 using LiveLikeBossSpawnChances.Helpers;
 using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Helpers;
+using SPTarkov.Server.Core.Helpers.Server;
 using System.Reflection;
 
 namespace LiveLikeBossSpawnChances.Utils

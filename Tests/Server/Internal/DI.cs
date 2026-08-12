@@ -2,8 +2,6 @@
 using SPTarkov.DI;
 using SPTarkov.Server.Core.DI;
 using SPTarkov.Server.Core.Models.Spt.Mod;
-using SPTarkov.Server.Core.Utils;
-using SPTarkov.Server.Core.Utils.Logger.Handlers;
 
 namespace LiveLikeBossSpawnChances.Server.Internal;
 
@@ -12,7 +10,7 @@ namespace LiveLikeBossSpawnChances.Server.Internal;
 [TestFixture]
 public class DI
 {
-    private static IServiceProvider _serviceProvider = null!;
+    private static IServiceProvider _serviceProvider = default!;
 
     private static DI? _instance;
 
@@ -37,9 +35,8 @@ public class DI
 
         var diHandler = new DependencyInjectionHandler(services);
 
-        diHandler.AddInjectableTypesFromTypeAssembly(typeof(App));
         diHandler.AddInjectableTypesFromTypeList([
-            typeof(MockLogger<>), // TODO: this needs to be enabled but the randomizer needs to NOT be random, typeof(MockRandomUtil)
+            typeof(MockLogger<>),
         ]);
 
         diHandler.InjectAll();
@@ -47,14 +44,11 @@ public class DI
         services.AddSingleton<IReadOnlyList<SptMod>>(_ => []);
 
         _serviceProvider = services.BuildServiceProvider();
+        CancellationToken cancellationToken = new CancellationToken();
 
         foreach (var onLoad in _serviceProvider.GetServices<IOnLoad>())
         {
-            if (onLoad is FileLogHandler)
-            {
-                continue;
-            }
-            onLoad.OnLoad().Wait();
+            onLoad.OnLoadAsync(cancellationToken).Wait();
         }
     }
 
@@ -62,5 +56,14 @@ public class DI
         where T : notnull
     {
         return _serviceProvider.GetRequiredService<T>();
+    }
+
+    [OneTimeTearDown]
+    public void OneTimeTearDown()
+    {
+        if (_serviceProvider is IDisposable disposable)
+        {
+            disposable.Dispose();
+        }
     }
 }
