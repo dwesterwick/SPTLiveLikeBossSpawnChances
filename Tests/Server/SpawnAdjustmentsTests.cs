@@ -1,8 +1,8 @@
 ﻿using LiveLikeBossSpawnChances.Server.Internal;
 using LiveLikeBossSpawnChances.Utils;
+using SPTarkov.Common.Models.Logging;
 using SPTarkov.Server.Core.Helpers.Profile;
 using SPTarkov.Server.Core.Helpers.Server;
-using SPTarkov.Server.Core.Loaders;
 using SPTarkov.Server.Core.Models.Eft.Common;
 using SPTarkov.Server.Core.Models.Spt.Tables;
 using System;
@@ -15,7 +15,7 @@ namespace LiveLikeBossSpawnChances.Server
 {
     public class SpawnAdjustmentsTests
     {
-        private MockLogger<LiveLikeBossSpawnChances_Server> _logger;
+        private ISptLogger<LiveLikeBossSpawnChances_Server> _logger;
         private LoggingUtil _loggingUtil;
         private MockConfigUtil _configUtil;
 
@@ -29,10 +29,9 @@ namespace LiveLikeBossSpawnChances.Server
         [SetUp]
         public void Setup()
         {
-            _logger = new MockLogger<LiveLikeBossSpawnChances_Server>();
-
             RunFromSptInstallDirectoryService.RunFromSptInstallDirectory(LoadSptDependencies);
 
+            _logger = new MockLogger<LiveLikeBossSpawnChances_Server>();
             _configUtil = new MockConfigUtil(_modHelper);
             _loggingUtil = new LoggingUtil(_logger, _configUtil);
 
@@ -63,11 +62,9 @@ namespace LiveLikeBossSpawnChances.Server
 
         private void LoadSptDependencies()
         {
-            var locales = ProgramHelpers.CreateEarlyLocaleTable() ?? throw new InvalidOperationException("Locales aren't loaded lmao");
-            var configuration = ConfigLoader.Initialize(_logger).GetAwaiter().GetResult();
-            _modHelper = DI.GetInstance(configuration, locales, _logger).GetService<ModHelper>();
-            _locationTable = DI.GetInstance(configuration, locales, _logger).GetService<LocationTable>();
-            _profileHelper = DI.GetInstance(configuration, locales, _logger).GetService<ProfileHelper>();
+            _modHelper = DI.GetInstance().GetService<ModHelper>();
+            _locationTable = DI.GetInstance().GetService<LocationTable>();
+            _profileHelper = DI.GetInstance().GetService<ProfileHelper>();
         }
     }
 }

@@ -21,14 +21,14 @@ public class DI
 
     private static DI? _instance;
 
-    private DI(IReadOnlyDictionary<Type, BaseConfig> configuration, LocaleTable locales, ILogger logger)
+    private DI()
     {
-        ConfigureServices(configuration, locales, logger);
+        ConfigureServices();
     }
 
-    public static DI GetInstance(IReadOnlyDictionary<Type, BaseConfig> configuration, LocaleTable locales, ILogger logger)
+    public static DI GetInstance()
     {
-        return _instance ??= new DI(configuration, locales, logger);
+        return _instance ??= new DI();
     }
 
     private DatabaseTables SetupDB(IReadOnlyDictionary<Type, BaseConfig> configuration, LocaleTable locales, ILogger logger)
@@ -57,21 +57,25 @@ public class DI
         return tables is null ? throw new InvalidOperationException("Tables aren't loaded lol") : tables;
     }
 
-    private void ConfigureServices(IReadOnlyDictionary<Type, BaseConfig> configuration, LocaleTable locales, ILogger logger)
+    private void ConfigureServices()
     {
         if (_serviceProvider != null)
         {
             return;
         }
 
+        var mockLogger = new MockLogger<DI>();
+        var configuration = ConfigLoader.Initialize(mockLogger).GetAwaiter().GetResult();
+
         var services = new ServiceCollection();
-        services.AddSingleton(logger);
+        services.AddSingleton(mockLogger);
         services.AddSingleton(typeof(ILogger<>), typeof(MockLogger<>));
         services.AddSingleton(typeof(ISptLogger<>), typeof(MockLogger<>));
         services.AddHttpContextAccessor();
         services.AddHttpClient();
 
-        var db = SetupDB(configuration, locales, logger);
+        var locales = ProgramHelpers.CreateEarlyLocaleTable() ?? throw new InvalidOperationException("Locales aren't loaded lmao");
+        var db = SetupDB(configuration, locales, mockLogger);
         services.AddSingleton(db.Bots);
         services.AddSingleton(db.Hideout);
         services.AddSingleton(db.Locales);
