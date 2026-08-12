@@ -1,6 +1,6 @@
 ﻿using LiveLikeBossSpawnChances.Helpers;
+using SPTarkov.Common.Models.Logging;
 using SPTarkov.DI.Annotations;
-using SPTarkov.Server.Core.Models.Utils;
 
 namespace LiveLikeBossSpawnChances.Utils
 {

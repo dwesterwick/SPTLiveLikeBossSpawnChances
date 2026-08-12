@@ -1,9 +1,10 @@
 ﻿using LiveLikeBossSpawnChances.Server.Internal;
 using LiveLikeBossSpawnChances.Utils;
-using SPTarkov.Server.Core.Helpers;
+using SPTarkov.Common.Models.Logging;
+using SPTarkov.Server.Core.Helpers.Profile;
+using SPTarkov.Server.Core.Helpers.Server;
 using SPTarkov.Server.Core.Models.Eft.Common;
-using SPTarkov.Server.Core.Models.Utils;
-using SPTarkov.Server.Core.Services;
+using SPTarkov.Server.Core.Models.Spt.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace LiveLikeBossSpawnChances.Server
         private MockConfigUtil _configUtil;
 
         private ModHelper _modHelper = null!;
-        private DatabaseService _databaseService = null!;
+        private LocationTable _locationTable = null!;
         private ProfileHelper _profileHelper = null!;
 
         private ProfileUtil _profileUtil;
@@ -35,13 +36,13 @@ namespace LiveLikeBossSpawnChances.Server
             _loggingUtil = new LoggingUtil(_logger, _configUtil);
 
             _profileUtil = new ProfileUtil(_profileHelper);
-            _adjustSpawnChancesUtil = new AdjustSpawnChancesUtil(_loggingUtil, _configUtil, _databaseService, _profileUtil);
+            _adjustSpawnChancesUtil = new AdjustSpawnChancesUtil(_loggingUtil, _configUtil, _locationTable, _profileUtil);
         }
 
         [Test]
         public void EnsureSpawnAdjustmentsAreRevsersible()
         {
-            Location? customs = _databaseService.GetLocation("bigmap");
+            Location? customs = _locationTable.GetLocation("bigmap");
             Assert.NotNull(customs, "Could not find Customs location in SPT database");
 
             string reshalaName = "bossBully";
@@ -62,7 +63,7 @@ namespace LiveLikeBossSpawnChances.Server
         private void LoadSptDependencies()
         {
             _modHelper = DI.GetInstance().GetService<ModHelper>();
-            _databaseService = DI.GetInstance().GetService<DatabaseService>();
+            _locationTable = DI.GetInstance().GetService<LocationTable>();
             _profileHelper = DI.GetInstance().GetService<ProfileHelper>();
         }
     }

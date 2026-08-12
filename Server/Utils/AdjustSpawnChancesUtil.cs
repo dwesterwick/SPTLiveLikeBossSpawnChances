@@ -3,7 +3,7 @@ using LiveLikeBossSpawnChances.Helpers;
 using SPTarkov.DI.Annotations;
 using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common;
-using SPTarkov.Server.Core.Services;
+using SPTarkov.Server.Core.Models.Spt.Tables;
 using System.Numerics;
 
 namespace LiveLikeBossSpawnChances.Utils
@@ -15,14 +15,14 @@ namespace LiveLikeBossSpawnChances.Utils
 
         private LoggingUtil _logger;
         private ConfigUtil _config;
-        private DatabaseService _databaseService;
+        private LocationTable _locationTable;
         private ProfileUtil _profileUtil;
 
-        public AdjustSpawnChancesUtil(LoggingUtil logger, ConfigUtil config, DatabaseService databaseService, ProfileUtil profileUtil)
+        public AdjustSpawnChancesUtil(LoggingUtil logger, ConfigUtil config, LocationTable locationTable, ProfileUtil profileUtil)
         {
             _logger = logger;
             _config = config;
-            _databaseService = databaseService;
+            _locationTable = locationTable;
             _profileUtil = profileUtil;
         }
 
@@ -57,7 +57,7 @@ namespace LiveLikeBossSpawnChances.Utils
 
             _logger.Info($"Scaling boss spawn chances to {Math.Round(adjustmentMultiplier * 100)}% of their default spawn chances");
 
-            foreach (Location location in _databaseService.EnumerateLocations())
+            foreach (Location location in _locationTable.EnumerateLocations())
             {
                 AdjustBossSpawnChancesForLocation(location, correctedAdjustmentMultiplier);
             }
