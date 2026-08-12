@@ -8,7 +8,7 @@ namespace LiveLikeBossSpawnChances.Server.Internal;
 // Copied from https://github.com/sp-tarkov/server-csharp/blob/main/Testing/UnitTests/Mock/MockLogger.cs
 
 [Injectable]
-public class MockLogger<T> : ISptLogger<T>
+public class MockLogger<T> : ISptLogger<T>, ILogger<T>
 {
     public void LogWithColor(string data, Color? textColor = null, Color? backgroundColor = null, Exception? ex = null)
     {
@@ -79,5 +79,36 @@ public class MockLogger<T> : ISptLogger<T>
     public void WriteToLogFile(object body)
     {
         Console.WriteLine(body);
+    }
+
+    public IDisposable? BeginScope<TState>(TState state)
+        where TState : notnull
+    {
+        return null;
+    }
+
+    public bool IsEnabled(LogLevel logLevel)
+    {
+        return true;
+    }
+
+    public void Log<TState>(
+        LogLevel logLevel,
+        EventId eventId,
+        TState state,
+        Exception? exception,
+        Func<TState, Exception?, string> formatter
+    )
+    {
+        ArgumentNullException.ThrowIfNull(formatter);
+
+        var message = formatter(state, exception);
+
+        Console.WriteLine($"[{logLevel}] {message}");
+
+        if (exception != null)
+        {
+            Console.WriteLine(exception);
+        }
     }
 }
