@@ -25,17 +25,18 @@
 		}
 	},
 	"ignored_bosses": {
-		"Customs": [ "gifter" ],
-		"Factory": [ "gifter" ],
-		"Interchange": [ "gifter" ],
+		"Global": [ "gifter", "shooterBTR", "pmcBEAR", "pmcUSEC" ],
+		"Customs": [ ],
+		"Factory": [ ],
+		"Interchange": [ ],
 		"Laboratory": [ "pmcBot" ],
 		"Labyrinth": [ "bossTagillaAgro", "bossKillaAgro", "tagillaHelperAgro" ],
-		"Lighthouse": [ "gifter", "exUsec", "bossZryachiy" ],
-		"ReserveBase": [ "gifter" ],
-		"Sandbox": [ "gifter" ],
-		"Shoreline": [ "gifter" ],
-		"Streets of Tarkov": [ "gifter", "shooterBTR" ],
-		"Woods": [ "gifter", "shooterBTR" ]
+		"Lighthouse": [ "exUsec", "bossZryachiy" ],
+		"ReserveBase": [ ],
+		"Sandbox": [ ],
+		"Shoreline": [ ],
+		"Streets of Tarkov": [ ],
+		"Woods": [ ]
 	},
 	"blocked_bosses": [ "arenaFighterEvent", "crazyAssaultEvent", "peacemaker", "skier" ],
 	"disable_weekly_boss_rotation": true,

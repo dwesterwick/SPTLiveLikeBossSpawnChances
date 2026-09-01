@@ -11,6 +11,8 @@ namespace LiveLikeBossSpawnChances.Utils
     [Injectable(InjectionType.Singleton)]
     public class AdjustSpawnChancesUtil
     {
+        private const string GLOBAL_KEY = "Global";
+
         private double _lastAdjustmentMultiplierApplied = 1;
 
         private LoggingUtil _logger;
@@ -74,12 +76,15 @@ namespace LiveLikeBossSpawnChances.Utils
 
             foreach (BossLocationSpawn bossLocationSpawn in location.Base.BossLocationSpawn)
             {
-                if (_config.CurrentConfig.IgnoredBosses.TryGetValue(location.Base.Name!, out string[]? ignoredBosses) && (ignoredBosses != null))
+                if (bossLocationSpawn.BossName == null)
                 {
-                    if (ignoredBosses.Contains(bossLocationSpawn.BossName))
-                    {
-                        continue;
-                    }
+                    continue;
+                }
+
+                List<string> ignoredBosses = GetAllIgnoredBossNames(location);
+                if (ignoredBosses.Contains(bossLocationSpawn.BossName))
+                {
+                    continue;
                 }
 
                 double originalChance = bossLocationSpawn.BossChance ?? 0;
@@ -98,6 +103,28 @@ namespace LiveLikeBossSpawnChances.Utils
                     _logger.Debug($"Changed spawn chance of {bossLocationSpawn.BossName} on {location.Base.Name} from {originalChance}% to {bossLocationSpawn.BossChance}%");
                 }
             }
+        }
+
+        private List<string> GetAllIgnoredBossNames(Location location)
+        {
+            List<string> ignoredBosses = new List<string>();
+
+            if (location?.Base?.Name == null)
+            {
+                return ignoredBosses;
+            }
+
+            if (_config.CurrentConfig.IgnoredBosses.TryGetValue(GLOBAL_KEY, out string[]? globalIgnoredBosses) && (globalIgnoredBosses != null))
+            {
+                ignoredBosses.AddRange(globalIgnoredBosses);
+            }
+
+            if (_config.CurrentConfig.IgnoredBosses.TryGetValue(location.Base.Name, out string[]? ignoredBossesForLocation) && (ignoredBossesForLocation != null))
+            {
+                ignoredBosses.AddRange(ignoredBossesForLocation);
+            }
+
+            return ignoredBosses;
         }
 
         private int GetPmcLevel(MongoId? sessionId)
