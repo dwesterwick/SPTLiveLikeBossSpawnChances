@@ -13,12 +13,21 @@ namespace LiveLikeBossSpawnChances.Utils
     {
         private const string GLOBAL_KEY = "Global";
 
+        public DateTime? UtcTimeOfAdjustmentsLastApplied { get; private set; } = null;
+        public MongoId? SessionIdOfLastAdjustmentsApplied { get; private set; } = null;
+
         private double _lastAdjustmentMultiplierApplied = 1;
 
         private LoggingUtil _logger;
         private ConfigUtil _config;
         private LocationTable _locationTable;
         private ProfileUtil _profileUtil;
+
+        public bool AdjustmentsApplied => UtcTimeOfAdjustmentsLastApplied != null;
+        public double? DaysSinceAdjustmentsLastApplied => UtcTimeOfAdjustmentsLastApplied == null ? null : (DateTime.UtcNow - UtcTimeOfAdjustmentsLastApplied.Value).TotalDays;
+        public bool CanRefreshByTime => UtcTimeOfAdjustmentsLastApplied == null ? true : DaysSinceAdjustmentsLastApplied >= _config.CurrentConfig.DelayBeforeRefreshDays;
+
+        public bool IsSessionIdOfLastAdjustmentsApplied(MongoId? sessionId) => (sessionId != null) && (sessionId == SessionIdOfLastAdjustmentsApplied);
 
         public AdjustSpawnChancesUtil(LoggingUtil logger, ConfigUtil config, LocationTable locationTable, ProfileUtil profileUtil)
         {
@@ -32,8 +41,22 @@ namespace LiveLikeBossSpawnChances.Utils
 
         public void AdjustAllBossSpawnChances(MongoId? sessionId)
         {
+            bool canUseProfile = CanUseProfile(sessionId);
+            if (!canUseProfile && (UtcTimeOfAdjustmentsLastApplied != null))
+            {
+                _logger.Warning("Could not retrieve PMC profile. Keeping existing scaling.");
+                return;
+            }
+
             double adjustmentMultiplier = GetAdjustmentMultiplierForProfile(sessionId);
             AdjustAllBossSpawnChances(adjustmentMultiplier);
+
+            if (canUseProfile)
+            {
+                _logger.Info($"Boss spawn chance adjustments refreshed for {sessionId.ToString()}");
+                UtcTimeOfAdjustmentsLastApplied = DateTime.UtcNow;
+                SessionIdOfLastAdjustmentsApplied = sessionId;
+            }
         }
 
         public double GetAdjustmentMultiplierForProfile(MongoId? sessionId)
@@ -127,6 +150,22 @@ namespace LiveLikeBossSpawnChances.Utils
             return ignoredBosses;
         }
 
+        private bool CanUseProfile(MongoId? sessionId)
+        {
+            if (sessionId == null)
+            {
+                return false;
+            }
+
+            PmcData? pmcData = _profileUtil.GetPmcProfile(sessionId.Value);
+            if (pmcData?.Info == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         private int GetPmcLevel(MongoId? sessionId)
         {
             int? pmcLevel = null;
@@ -140,7 +179,7 @@ namespace LiveLikeBossSpawnChances.Utils
             {
                 pmcLevel = _config.CurrentConfig.Debug.DefaultPlayerLevel;
 
-                _logger.Error($"Could not retrieve PMC profile. Assuming player level is {pmcLevel}.");
+                _logger.Warning($"Could not retrieve PMC profile. Assuming player level is {pmcLevel}.");
             }
 
             return pmcLevel.Value;
@@ -159,7 +198,7 @@ namespace LiveLikeBossSpawnChances.Utils
             {
                 playerHours = _config.CurrentConfig.Debug.DefaultPlayerHours;
 
-                _logger.Error($"Could not retrieve PMC profile. Assuming player hours are {playerHours}.");
+                _logger.Warning($"Could not retrieve PMC profile. Assuming player hours are {playerHours}.");
             }
 
             return playerHours.Value;

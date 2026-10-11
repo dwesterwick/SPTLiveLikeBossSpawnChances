@@ -9,6 +9,7 @@
 		"player_level": true,
 		"player_hours": true
 	},
+	"delay_before_refresh_days": 1,
 	"adjustments_disabled_after_player_level": 40,
 	"thresholds": {
 		"adjustment_range" : {

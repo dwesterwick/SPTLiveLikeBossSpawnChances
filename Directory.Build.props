@@ -3,7 +3,7 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<AssemblyTitle>LiveLikeBossSpawnChances</AssemblyTitle>
 		<Authors>DanW</Authors>
-		<Version>2.2.0</Version>
+		<Version>2.3.0</Version>
 		<SPTVersion>~4.1.0</SPTVersion>
 		<SPTGUID>com.danw.livelikebossspawnchances</SPTGUID>
 		<GithubRepoPath>https://github.com/dwesterwick/SPTLiveLikeBossSpawnChances</GithubRepoPath>

@@ -10,6 +10,7 @@ Bosses (that aren't ignored or blocked from spawning) will have their spawn chan
 
 This mod is highly configurable in _config.json_ and allows the following to be adjusted:
 * `adjustment_factors`: whether player level, player in-raid hours, or both will be used to adjust boss spawn chances
+* `delay_before_refresh_days`: How often the spawn-chance scaling will be updated while the server is up (once per day by default). The scaling will always be updated when the server first starts. 
 * `adjustments_disabled_after_player_level`: the upper threshold described in step (3) above which no spawn-rate scaling will occur.
 * `thresholds.adjustment_range`: the upper and lower scaling amounts that can be applied to boss spawn rates (20% minimum and 100% maximum, relative to vanilla SPT values, by default).
 * `thresholds.player_level` and `thresholds.player_hours`: The range of player levels and in-raid hours between which boss spawn rates will be scaled. If either value is below its corresponding minimum threshold, boss spawn rates will be scaled by the minimum value in `thresholds.adjustment_range`. After both values are above their corresponding maximum thresholds, boss spawn rates will be scaled by the maximum value in `thresholds.adjustment_range`. Otherwise, scaling will be determined by whichever value (player level or in-raid hours) has the least amount of "progression" defined by these ranges. 
@@ -20,4 +21,4 @@ This mod is highly configurable in _config.json_ and allows the following to be 
 
 **Known Issues:**
 * Due to rounding error, spawn rates might not exactly match vanilla SPT values after switching from a new profile to a Dev (or other late-wipe) profile. However, they should be close enough that you won't notice a difference.
-* If you're using a multi-player mod, spawn rates will only be set using the host's profile. 
+* If you're using a multi-player mod, spawn rates will only be set using the host's profile (the first one to connect to the server). 

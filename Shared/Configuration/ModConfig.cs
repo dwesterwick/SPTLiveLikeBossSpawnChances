@@ -14,6 +14,9 @@ namespace LiveLikeBossSpawnChances.Configuration
         [DataMember(Name = "adjustment_factors", IsRequired = true)]
         public AdjustmentFactorsConfig AdjustmentFactors { get; set; } = new AdjustmentFactorsConfig();
 
+        [DataMember(Name = "delay_before_refresh_days", IsRequired = true)]
+        public double DelayBeforeRefreshDays { get; set; } = 1;
+
         [DataMember(Name = "adjustments_disabled_after_player_level", IsRequired = true)]
         public int AdjustmentsDisabledAfterPlayerLevel { get; set; } = 40;
 
