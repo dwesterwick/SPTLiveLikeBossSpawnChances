@@ -5,6 +5,7 @@ using SPTarkov.Server.Core.Models.Common;
 using SPTarkov.Server.Core.Models.Eft.Common;
 using SPTarkov.Server.Core.Models.Spt.Tables;
 using System.Numerics;
+using System.Text.RegularExpressions;
 
 namespace LiveLikeBossSpawnChances.Utils
 {
@@ -158,7 +159,13 @@ namespace LiveLikeBossSpawnChances.Utils
             }
 
             PmcData? pmcData = _profileUtil.GetPmcProfile(sessionId.Value);
-            if (pmcData?.Info == null)
+            if (pmcData?.Info?.Nickname == null)
+            {
+                return false;
+            }
+
+            // Fika headless profiles aren't real profiles
+            if (Regex.IsMatch(pmcData.Info.Nickname, @"^headless_[0-9a-fA-F]{24}$"))
             {
                 return false;
             }
