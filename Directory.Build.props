@@ -3,11 +3,11 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<AssemblyTitle>LiveLikeBossSpawnChances</AssemblyTitle>
 		<Authors>DanW</Authors>
-		<Version>2.3.1</Version>
+		<Version>2.3.2</Version>
 		<SPTVersion>~4.1.0</SPTVersion>
 		<SPTGUID>com.danw.livelikebossspawnchances</SPTGUID>
 		<GithubRepoPath>https://github.com/dwesterwick/SPTLiveLikeBossSpawnChances</GithubRepoPath>
 		<RelativePathToRootSPTInstall>../../</RelativePathToRootSPTInstall>
-		<SPTServerDebugPath>D:\SPT\Escape from Tarkov Single Player\Source\Server\SPTarkov.Server\bin\Debug\net10.0</SPTServerDebugPath>
+		<SPTServerDebugPath>D:\SPT\Escape from Tarkov Single Player\Source\Server\SPTushonka.Server\bin\Debug\net10.0</SPTServerDebugPath>
 	</PropertyGroup>
 </Project>
