@@ -34,11 +34,18 @@ namespace LiveLikeBossSpawnChances.Utils
 
             PmcData? scavData = GetScavProfile(sessionId);
 
-            long pmcSecondsInRaid = pmcData?.Stats?.Eft?.TotalInGameTime ?? 0;
-            long scavSecondsInRaid = scavData?.Stats?.Eft?.TotalInGameTime ?? 0;
-            double totalHoursInRaid = (pmcSecondsInRaid + scavSecondsInRaid) / 3600.0;
+            // SPT 3.11 tracking method
+            long pmcTotalInGameTime = pmcData?.Stats?.Eft?.TotalInGameTime ?? 0;
+            long scavTotalInGameTime = scavData?.Stats?.Eft?.TotalInGameTime ?? 0;
+            double totalTotalInGameTimeHours = (pmcTotalInGameTime + scavTotalInGameTime) / 3600.0;
 
-            return Math.Round(totalHoursInRaid, 2);
+            // SPT 4.x tracking method
+            long pmcLifeTime = pmcData?.Stats?.Eft?.OverallCounters?.Items?.FirstOrDefault(counter => counter.Key?.Contains("LifeTime") == true)?.Value ?? 0;
+            long scavLifeTime = scavData?.Stats?.Eft?.OverallCounters?.Items?.FirstOrDefault(counter => counter.Key?.Contains("LifeTime") == true)?.Value ?? 0;
+            double totalLifeTimeHours = (pmcLifeTime + scavLifeTime) / 3600.0;
+
+            double highestInGameTime = Math.Max(totalTotalInGameTimeHours, totalLifeTimeHours);
+            return Math.Round(highestInGameTime, 2);
         }
     }
 }
